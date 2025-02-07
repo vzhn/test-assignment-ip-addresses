@@ -1,14 +1,14 @@
 package me.vzhilin.job.ipcounter
 
 import me.vzhilin.job.ipcounter.tree.BitsNode
-import me.vzhilin.job.ipcounter.tree.Page
+import me.vzhilin.job.ipcounter.tree.PageNode
 import me.vzhilin.job.ipcounter.tree.Node
 import me.vzhilin.job.ipcounter.tree.NodeVisitor
 import kotlin.Long
 
 class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEFAULT) {
     private var counter: Long = 0
-    private val root = Page(1 shl conf.bitWidth(0))
+    private val root = PageNode(1 shl conf.bitWidth(0))
 
     private var path = arrayOfNulls<Node?>(conf.pagesCount)
 
@@ -27,7 +27,7 @@ class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEF
         }
 
         for (i in 0 until conf.pagesCount - 1) {
-            val currentPage = path[i] as Page
+            val currentPage = path[i] as PageNode
             val nextAddr = conf.getAddressPart(i, bit)
 
             if (currentPage.isFull(nextAddr)) {
@@ -41,7 +41,7 @@ class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEF
                 if (isLastIteration)
                     BitsNode(capacity)
                 else
-                    Page(capacity)
+                    PageNode(capacity)
             }
         }
 
@@ -59,7 +59,7 @@ class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEF
     private fun BitCounter.checkAncestorsAndMarkAsFull(pages: Array<Node?>, bit: Long) {
         val pagesExceptBits = pages.size - 2 downTo 0
         for (i in pagesExceptBits) {
-            val currentPage = pages[i] as Page
+            val currentPage = pages[i] as PageNode
             val nextAddr = conf.getAddressPart(i, bit)
 
             currentPage.markFull(nextAddr)
@@ -71,7 +71,7 @@ class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEF
         return counter
     }
 
-    fun visit(visitor: NodeVisitor) {
+    internal fun visit(visitor: NodeVisitor) {
         visitor.begin()
         visitor.beginPage(0)
         root.visit(visitor)

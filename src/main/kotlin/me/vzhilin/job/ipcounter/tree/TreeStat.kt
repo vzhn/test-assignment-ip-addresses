@@ -8,8 +8,8 @@ class Stat private constructor(
     val emptyNodesCount: Map<Level, Int>,
     val fullNodesCount: Map<Level, Int>,
     val bitPopulations: Map<Int, Int>,
-    val totalPagesCount: Int,
-    val totalBitPagesCount: Int
+    val pageNodes: Int,
+    val bitNodes: Int
 ) {
     companion object {
         fun collect(bc: BitCounter): Stat {
@@ -65,8 +65,8 @@ class Stat private constructor(
                 emptyNodesCount=emptyNodes,
                 fullNodesCount=fullNodes,
                 bitPopulations=bitPopulations,
-                totalPagesCount=totalPages,
-                totalBitPagesCount=totalBitPages
+                pageNodes=totalPages,
+                bitNodes=totalBitPages
             )
         }
     }

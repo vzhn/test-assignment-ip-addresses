@@ -7,14 +7,16 @@ import kotlin.test.assertEquals
 class MiniTest {
     @Test
     fun oneBitSet() {
-        val bc = BitCounter(BitAddressConfiguration(kotlin.collections.listOf(2), 6))
+        val bc = BitCounter(BitAddressConfiguration(listOf(2), 6))
         bc.put(0)
 
-        val stat = Stat.Companion.collect(bc)
+        val stat = Stat.collect(bc)
         assertEquals(1, bc.getCount())
         assertEquals(3, stat.emptyNodesCount[1])
         assertEquals(0, stat.fullNodesCount[1])
-        assertEquals(kotlin.collections.mapOf(1 to 1), stat.bitPopulations)
+        assertEquals(1, stat.pageNodes)
+        assertEquals(1, stat.bitNodes)
+        assertEquals(mapOf(1 to 1), stat.bitPopulations)
     }
 
     @Test

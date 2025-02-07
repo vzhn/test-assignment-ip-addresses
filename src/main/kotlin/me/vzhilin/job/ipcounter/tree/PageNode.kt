@@ -2,7 +2,7 @@ package me.vzhilin.job.ipcounter.tree
 
 import java.util.BitSet
 
-class Page(val capacity: Int): Node() {
+class PageNode(val capacity: Int): Node() {
     private var nodes: Array<Node?> = Array(capacity) { null }
     private var fullNodes: BitSet = BitSet(capacity)
     private var fullCount = 0
@@ -41,7 +41,7 @@ class Page(val capacity: Int): Node() {
                 nv.emptyNode(i)
             } else {
                 val next = nodes[i]!!
-                if (next is Page) {
+                if (next is PageNode) {
                     nv.beginPage(i)
                     next.visit(nv)
                     nv.endPage(i)
