@@ -21,7 +21,7 @@ It's better if your implementation is more complicated and faster than this naiv
 ## Solution 
 
 1. Represent each IP address as a bit in a bit array. So addresses are stored in structure similar to `BitSet`.
-2. In order to save memory split array to chunks. Allocate chunk only when it is not full and not is empty. 
+2. In order to save memory split array to chunks. Allocate chunk only when it is not full and is not empty. 
 3. Store chunk information in a hierarchical, lazily-initialized structure 
 
 This structure allows to reduce memory usage for small set. 
