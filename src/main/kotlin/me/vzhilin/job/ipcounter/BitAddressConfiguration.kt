@@ -2,13 +2,19 @@ package me.vzhilin.job.ipcounter
 
 import kotlin.Long
 
-class BitAddressConfiguration(pages: List<Int>, bitmaps: Int) {
-    private val addressWidths = pages + bitmaps
+class BitAddressConfiguration(pages: List<Int>, bitset: Int) {
+    private val addressWidths = pages + bitset
 
     val pagesCount = addressWidths.size
     val addrWidth = addressWidths.sum()
 
     init {
+        if (pages.isEmpty()) {
+            throw IllegalArgumentException("configuration without pages is not supported")
+        }
+        if (bitset <= 0) {
+            throw IllegalArgumentException("address part for bitmaps should not be empty")
+        }
         if (addrWidth > Long.SIZE_BITS) {
             throw IllegalArgumentException("max address width is ${Long.SIZE_BITS}")
         }

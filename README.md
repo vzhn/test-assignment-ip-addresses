@@ -26,6 +26,7 @@ It's better if your implementation is more complicated and faster than this naiv
 
 This structure allows to reduce memory usage for small set. 
 
-The picture illustrates address representation as `8+8+16`: 8 bits for first page address, 8 bit for next page address, 16 bit for bit address in a bit set 
+The picture illustrates address representation as `8+8+16`: 8 bits for first page address, 8 bit for next page address, 16 bit for bit address in a bit set.
+This configuration is tunable, see [BitAddressConfiguration.kt](src/main/kotlin/me/vzhilin/job/ipcounter/BitAddressConfiguration.kt)
 
 ![image](./doc/address.png)
