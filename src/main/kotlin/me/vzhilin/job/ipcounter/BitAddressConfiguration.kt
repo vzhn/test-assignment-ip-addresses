@@ -1,0 +1,33 @@
+package me.vzhilin.job.ipcounter
+
+import kotlin.Long
+
+class BitAddressConfiguration(pages: List<Int>, bitmaps: Int) {
+    private val addressWidths = pages + bitmaps
+
+    val pagesCount = addressWidths.size
+    val addrWidth = addressWidths.sum()
+
+    init {
+        if (addrWidth > Long.SIZE_BITS) {
+            throw IllegalArgumentException("max address width is ${Long.SIZE_BITS}")
+        }
+    }
+
+    private val offsets = addressWidths.asReversed().runningFold(0) { acc, width ->
+        acc + width
+    }.dropLast(1).asReversed().toList()
+
+    fun getAddressPart(index: Int, address: Long): Int {
+        val mask = (1L shl addressWidths[index]) - 1L
+        return ((address shr offsets[index]) and mask).toInt()
+    }
+
+    fun bitWidth(pageNumber: Int): Int {
+        return addressWidths[pageNumber]
+    }
+
+    companion object {
+        val DEFAULT = BitAddressConfiguration(listOf(8, 8), 16)
+    }
+}
