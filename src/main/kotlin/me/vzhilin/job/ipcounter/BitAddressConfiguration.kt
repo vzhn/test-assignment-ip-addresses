@@ -28,6 +28,11 @@ class BitAddressConfiguration(pages: List<Int>, bitmaps: Int) {
     }
 
     companion object {
+        // default configuration
+        //
+        // 2 levels of pages
+        // each page has up to 2^8 (256) children
+        // each bit set has 2^16 (65536) bits
         val DEFAULT = BitAddressConfiguration(listOf(8, 8), 16)
     }
 }

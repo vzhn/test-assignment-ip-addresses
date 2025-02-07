@@ -1,6 +1,6 @@
 package me.vzhilin.job.ipcounter.tree
 
-class BitsNode(private val bitsCapacity: Int): Node() {
+class BitSetNode(private val bitsCapacity: Int): Node() {
     init {
         if (bitsCapacity % 64 != 0) {
             throw IllegalArgumentException("capacity should be dividable on 64")

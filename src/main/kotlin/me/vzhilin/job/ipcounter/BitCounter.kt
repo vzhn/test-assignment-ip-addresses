@@ -1,6 +1,6 @@
 package me.vzhilin.job.ipcounter
 
-import me.vzhilin.job.ipcounter.tree.BitsNode
+import me.vzhilin.job.ipcounter.tree.BitSetNode
 import me.vzhilin.job.ipcounter.tree.PageNode
 import me.vzhilin.job.ipcounter.tree.Node
 import me.vzhilin.job.ipcounter.tree.NodeVisitor
@@ -10,6 +10,7 @@ class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEF
     private var counter: Long = 0
     private val root = PageNode(1 shl conf.bitWidth(0))
 
+    // reduce allocations by reusing array
     private var path = arrayOfNulls<Node?>(conf.pagesCount)
 
     init {
@@ -39,13 +40,13 @@ class BitCounter(val conf: BitAddressConfiguration = BitAddressConfiguration.DEF
                 val isLastIteration = i == conf.pagesCount - 2
 
                 if (isLastIteration)
-                    BitsNode(capacity)
+                    BitSetNode(capacity)
                 else
                     PageNode(capacity)
             }
         }
 
-        val bits = path.last() as BitsNode
+        val bits = path.last() as BitSetNode
         val bitAddress = conf.getAddressPart(conf.pagesCount - 1,  bit)
         if (bits.put(bitAddress)) {
             ++counter
