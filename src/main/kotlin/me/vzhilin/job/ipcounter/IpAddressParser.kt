@@ -11,14 +11,14 @@ class IpAddressParser {
      * @return true when new address is ready
      */
     fun feed(ch: Char): Boolean {
-        when {
-            ch.isDigit() -> {
-                accumulator = (accumulator and 0xffffff00) or ((accumulator and 0xff) * 10 + ch.digitToInt())
+        when (ch) {
+            in '0'..'9' -> {
+                accumulator = (accumulator and 0xffffff00) or ((accumulator and 0xff) * 10 + (ch - '0'))
             }
-            ch == '.' -> {
+            '.' -> {
                 accumulator = accumulator shl 8
             }
-            ch == '\n' -> {
+            '\n' -> {
                 addr = accumulator
                 accumulator = 0L
                 return true
